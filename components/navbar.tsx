@@ -1,11 +1,15 @@
+"use client";
+
 import React from "react";
 import MaxWidthWrapper from "./MaxWidthWrapper";
 import MinidenticonImg from "./avatar";
 import Link from "next/link";
 import { Button, buttonVariants } from "./ui/button";
+import { useUser } from "@clerk/nextjs";
 
 const NavBar = () => {
-  const user = null;
+  const { user } = useUser();
+  console.log(user);
 
   return (
     <nav className="sticky h-14 inset-x-0 top-0 z-30 w-full border-b border-gray-200 bg-white/75 backdrop-blur-lg translate-all">
@@ -22,15 +26,6 @@ const NavBar = () => {
           </div>
 
           <div className="hidden items-center space-x-4 sm:flex">
-            <Link
-              href="/pricing"
-              className={buttonVariants({
-                variant: "ghost",
-                size: "sm",
-              })}
-            >
-              Pricing
-            </Link>
             {user ? null : (
               <Button
                 variant={"ghost"}
@@ -50,7 +45,12 @@ const NavBar = () => {
               />
             )}
 
-            {user ? null : (
+            {user ? (
+              <div className="flex h-full items-center gap-1">
+              <h1 className="font-bold">Hi {user.firstName}!</h1>
+              <MinidenticonImg username={ user.fullName} saturation="90" width="50" height="50" />
+              </div>
+            ) : (
               <Button className="hidden sm:flex" asChild>
                 <Link href="/sign-up" className="text-lg font-bold">
                   Let's get started
