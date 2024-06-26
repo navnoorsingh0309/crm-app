@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import { useSignIn, useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
-import { auth } from "@clerk/nextjs/server";
 import {
   Card,
   CardContent,
@@ -64,11 +63,14 @@ const SignInPage = () => {
 
   return (
     <div className="container relative flex pt-5 flex-col items-center justify-center lg:px-0">
-      <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w[350px]">
+      <div className="mx-auto flex w-full flex-col justify-center space-y-6">
         <div className="flex flex-col items-center space-y-2 text-center">
-        <img src="/logo.jpg" className="md:h-20 md:w-20 h-14 w-14 rounded-full"/>
+          <img
+            src="/logo.jpg"
+            className="md:h-20 md:w-20 h-14 w-14 rounded-full"
+          />
           <div className="mx-auto rounded-none md:rounded-2xl md:p-4 shadow-input bg-white dark:bg-black">
-            <Card className="mx-auto md:w-[350px] w-[300px] h-[380px]">
+            <Card className="mx-auto sm:w-[400px] w-full h-fit">
               <CardHeader>
                 <CardTitle>Sign In</CardTitle>
                 <CardDescription>
@@ -80,22 +82,39 @@ const SignInPage = () => {
                   <div className="grid w-full items-center gap-4">
                     <div className="flex flex-col space-y-1.5">
                       <Label htmlFor="email" className="text-left">
-                        Email or Username
+                        Email
                       </Label>
                       <Input
-                        id="email_username"
-                        placeholder="email or username"
+                        id="email"
+                        placeholder="email"
+                        onChange={(e) => {
+                          setEmail((e.target as HTMLInputElement).value);
+                          setBError("");
+                        }}
                       />
                     </div>
                     <div className="flex flex-col space-y-1.5">
                       <Label htmlFor="password" className="text-left">
                         Password
                       </Label>
-                      <Input id="email_username" placeholder="••••••••" />
+                      <Input
+                        id="email_username"
+                        placeholder="••••••••"
+                        type="password"
+                        onChange={(e) => {
+                          setPassword((e.target as HTMLInputElement).value);
+                          setBError("");
+                        }}
+                      />
                     </div>
                   </div>
+                  <div className="signUpError-Div text-center w-full text-red-600">
+                    <p>{bError && bError}</p>
+                  </div>
                   <CardFooter className="flex justify-center mt-8">
-                    <Button variant="outline">Login</Button>
+                    <Button variant="outline" type="submit">
+                      Login
+                    </Button>
                   </CardFooter>
                 </form>
               </CardContent>

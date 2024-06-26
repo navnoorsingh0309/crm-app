@@ -1,8 +1,6 @@
 "use client";
-import { ArrowRight } from "lucide-react";
-import Link from "next/link";
-import React, { useEffect, useState } from "react";
-import { useAuth, useSignUp, useUser } from "@clerk/nextjs";
+import React, { useState } from "react";
+import { useSignUp, useUser } from "@clerk/nextjs";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
   Card,
@@ -94,6 +92,7 @@ const SignUpPage = () => {
           console.log(JSON.stringify(completeSignUp, null, 2));
         }
         if (completeSignUp.status === "complete") {
+          console.log("YO");
           await setActive({ session: completeSignUp.createdSessionId });
           router.push("/dashboard");
         }
@@ -105,11 +104,14 @@ const SignUpPage = () => {
 
   return (
     <div className="container relative flex pt-5 flex-col items-center justify-center lg:px-0">
-      <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w[350px]">
+      <div className="mx-auto flex w-full flex-col justify-center space-y-6">
         <div className="flex flex-col items-center space-y-2 text-center">
-          <img src="/logo.jpg" className="md:h-20 md:w-20 h-14 w-14 rounded-full" />
-          <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black">
-            <Card className="mx-auto md:w-[400px] w-[300px] h-[550px]">
+          <img
+            src="/logo.jpg"
+            className="md:h-20 md:w-20 h-14 w-14 rounded-full"
+          />
+          <div className="w-full mx-auto rounded-none md:rounded-2xl md:p-4 shadow-input bg-white dark:bg-black">
+            <Card className="mx-auto sm:w-[400px] w-full h-fit">
               <CardHeader>
                 <CardTitle>Sign Up</CardTitle>
                 <CardDescription>
@@ -117,49 +119,111 @@ const SignUpPage = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <form className="my-8" onSubmit={handleSubmit}>
-                  <div className="grid w-full items-center gap-4">
-                    <div className="flex flex-col space-y-1.5">
-                      <Label htmlFor="email" className="text-left">
-                        Email
-                      </Label>
-                      <Input
-                        id="email"
-                        placeholder="email@example.com"
-                      />
+                {!pendingVerification && (
+                  <form className="my-8" onSubmit={handleSubmit}>
+                    <div className="grid w-full items-center gap-4">
+                      <div className="flex flex-col space-y-1.5">
+                        <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
+                          <div className="flex flex-col space-y-1.5">
+                            <Label htmlFor="name" className="text-left">
+                              First Name
+                            </Label>
+                            <Input
+                              id="name"
+                              placeholder="First Name"
+                              type="text"
+                              onChange={(e) => {
+                                setFirstName(
+                                  (e.target as HTMLInputElement).value
+                                );
+                                setBError("");
+                              }}
+                            />
+                          </div>
+                          <div className="flex flex-col space-y-1.5">
+                            <Label htmlFor="name" className="text-left">
+                              Last Name
+                            </Label>
+                            <Input
+                              id="name"
+                              placeholder="Last Name"
+                              type="text"
+                              onChange={(e) => {
+                                setLastName(
+                                  (e.target as HTMLInputElement).value
+                                );
+                                setBError("");
+                              }}
+                            />
+                          </div>
+                        </div>
+                        <Label htmlFor="email" className="text-left">
+                          Email
+                        </Label>
+                        <Input
+                          id="email"
+                          placeholder="email@example.com"
+                          type="email"
+                          onChange={(e) => {
+                            setEmail((e.target as HTMLInputElement).value);
+                            setBError("");
+                          }}
+                        />
+                      </div>
+                      <div className="flex flex-col space-y-1.5">
+                        <Label htmlFor="password" className="text-left">
+                          Password
+                        </Label>
+                        <Input
+                          id="password"
+                          placeholder="••••••••"
+                          type="password"
+                          onChange={(e) => {
+                            setPassword((e.target as HTMLInputElement).value);
+                            setBError("");
+                          }}
+                        />
+                      </div>
                     </div>
-                    <div className="flex flex-col space-y-1.5">
-                      <Label htmlFor="text" className="text-left">
-                        Username
-                      </Label>
-                      <Input
-                        id="username"
-                        placeholder="user_name"
-                      />
+                    <br />
+                    <div className="signUpError-Div text-center w-full text-red-600 ">
+                      <p>{bError && bError}</p>
                     </div>
-                    <div className="flex flex-col space-y-1.5">
-                      <Label htmlFor="password" className="text-left">
-                        Password
-                      </Label>
-                      <Input
-                        id="password"
-                        placeholder="••••••••"
-                      />
+                    <CardFooter className="flex justify-center mt-8">
+                      <Button variant="outline" type="submit">
+                        Sign Up
+                      </Button>
+                    </CardFooter>
+                  </form>
+                )}
+                {pendingVerification && (
+                  <form className="my-8">
+                    <div className="grid w-full items-center gap-4">
+                      <div className="flex flex-col space-y-1.5">
+                        <Label htmlFor="text" className="text-left">
+                          Verification Code
+                        </Label>
+                        <Input
+                          id="code"
+                          placeholder="code"
+                          onChange={(e) => {
+                            setCode((e.target as HTMLInputElement).value);
+                            setBError("");
+                          }}
+                        />
+                      </div>
+                      <br />
+                      <div className="signUpError-Div text-center w-full text-red-600">
+                        <p>{bError && bError}</p>
+                      </div>
+                      <CardFooter className="flex justify-center mt-1">
+                        <Button variant="outline" onClick={onPressVerify}>
+                          Verify
+                        </Button>
+                      </CardFooter>
                     </div>
-                    <div className="flex flex-col space-y-1.5">
-                      <Label htmlFor="password-verify" className="text-left">
-                        Verify Password
-                      </Label>
-                      <Input
-                        id="password-verify"
-                        placeholder="••••••••"
-                      />
-                    </div>
-                  </div>
-                  <CardFooter className="flex justify-center mt-8">
-                    <Button variant="outline">Sign Up</Button>
-                  </CardFooter>
-                </form>
+                  </form>
+                )}
               </CardContent>
             </Card>
           </div>
