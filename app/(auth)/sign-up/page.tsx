@@ -14,6 +14,9 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
+import { ToastAction } from "@/components/ui/toast";
+import { useToast } from "@/components/ui/use-toast";
+
 type User = {
   first_name: string;
   last_name: string;
@@ -37,6 +40,8 @@ const SignUpPage = () => {
   const [code, setCode] = useState("");
   const { user } = useUser();
   const router = useRouter();
+
+  const { toast } = useToast();
 
   if (!isLoaded) {
     return null;
@@ -92,7 +97,12 @@ const SignUpPage = () => {
           console.log(JSON.stringify(completeSignUp, null, 2));
         }
         if (completeSignUp.status === "complete") {
-          console.log("YO");
+          toast({
+            title: "Acount Created Successfully! ",
+            action: (
+              <ToastAction altText="Ok">Ok</ToastAction>
+            ),
+          });
           await setActive({ session: completeSignUp.createdSessionId });
           router.push("/dashboard");
         }
@@ -111,7 +121,7 @@ const SignUpPage = () => {
             className="md:h-20 md:w-20 h-14 w-14 rounded-full"
           />
           <div className="w-full mx-auto rounded-none md:rounded-2xl md:p-4 shadow-input bg-white dark:bg-black">
-            <Card className="mx-auto sm:w-[400px] w-full h-fit">
+            <Card className="mx-auto sm:w-[400px] w-10/12 min-w-96 h-fit">
               <CardHeader>
                 <CardTitle>Sign Up</CardTitle>
                 <CardDescription>

@@ -2,30 +2,32 @@
 
 import React from "react";
 import MaxWidthWrapper from "./MaxWidthWrapper";
-import MinidenticonImg from "./avatar";
 import Link from "next/link";
-import { Button, buttonVariants } from "./ui/button";
-import { useUser } from "@clerk/nextjs";
+import { Button } from "./ui/button";
+import { SignOutButton, useUser } from "@clerk/nextjs";
+import { usePathname } from "next/navigation";
 
 const NavBar = () => {
   const { user } = useUser();
-  console.log(user);
+  const route = usePathname();
 
   return (
     <nav className="sticky h-14 inset-x-0 top-0 z-30 w-full border-b border-gray-200 bg-white/75 backdrop-blur-lg translate-all">
       <MaxWidthWrapper>
-        <div className="flex justify-between items-center h-full w-full">
+        <div className="flex justify-between pl-2 pr-2 items-center h-full w-full">
           <div className="flex h-full items-center gap-2">
-            <img
-              src="/logo.jpg"
-              className="lg:h-10 lg:w-10 h-8 w-8 rounded-full"
-            />
+            <Link href="/">
+              <img
+                src="/logo.jpg"
+                className="lg:h-10 lg:w-10 h-8 w-8 rounded-full"
+              />
+            </Link>
             <Link href="/" className="font-bold text-2xl">
               Relationz
             </Link>
           </div>
 
-          <div className="hidden items-center space-x-4 sm:flex">
+          <div className="items-center space-x-4 sm:flex">
             {user ? null : (
               <Button
                 variant={"ghost"}
@@ -46,9 +48,52 @@ const NavBar = () => {
             )}
 
             {user ? (
-              <div className="flex h-full items-center gap-1">
-              <h1 className="font-bold">Hi {user.firstName}!</h1>
-              <MinidenticonImg username={ user.fullName} saturation="90" width="50" height="50" />
+              <div className="flex h-full items-center gap-1 space-x-4">
+                <div className="flex h-full items-center justify-center space-x-1">
+                <Button
+                    variant={"ghost"}
+                    asChild
+                    className={"border-[color:var(--secondary-500)] border sm:border-0" + (route === "/dashboard" ? " bg-slate-200" : "")}
+                  >
+                    <Link href="/dashboard" className="text-lg font-bold">
+                      Dashboard
+                    </Link>
+                  </Button>
+                <Button
+                    variant={"ghost"}
+                    asChild
+                    className={"border-[color:var(--secondary-500)] border sm:border-0" + (route === "/your-team" ? " bg-slate-200" : "")}
+                  >
+                    <Link href="/your-team" className="text-lg font-bold">
+                      Your Team
+                    </Link>
+                  </Button>
+                  <Button
+                    variant={"ghost"}
+                    asChild
+                    className={"border-[color:var(--secondary-500)] border sm:border-0" + (route === "/leads" ? " bg-slate-200" : "")}
+                  >
+                    <Link href="/leads" className="text-lg font-bold">
+                      Leads
+                    </Link>
+                  </Button>
+                  <Button
+                    variant={"ghost"}
+                    asChild
+                    className={"border-[color:var(--secondary-500)] border sm:border-0" + (route === "/deals" ? " bg-slate-200" : "")}
+                  >
+                    <Link href="/deals" className="text-lg font-bold">
+                      Deals
+                    </Link>
+                  </Button>
+                </div>
+                <span
+                  className="h-6 w-px bg-gray-200 hidden sm:flex"
+                  aria-hidden="true"
+                />
+                <SignOutButton>
+                  <Button>Signout</Button>
+                </SignOutButton>
               </div>
             ) : (
               <Button className="hidden sm:flex" asChild>
