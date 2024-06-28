@@ -49,7 +49,7 @@ const NavBar = () => {
 
             {user ? (
               <div className="flex h-full items-center gap-1 space-x-4">
-                <div className="flex h-full items-center justify-center space-x-1">
+                <div className="hidden md:flex h-full items-center justify-center space-x-1">
                 <Button
                     variant={"ghost"}
                     asChild
@@ -88,7 +88,7 @@ const NavBar = () => {
                   </Button>
                 </div>
                 <span
-                  className="h-6 w-px bg-gray-200 hidden sm:flex"
+                  className="h-6 w-px bg-gray-200 hidden md:flex"
                   aria-hidden="true"
                 />
                 <SignOutButton>
