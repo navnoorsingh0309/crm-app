@@ -1,13 +1,11 @@
 import MaxMainWidth from "@/components/MaxMainRegion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 
 export default function Home() {
   return (
     <MaxMainWidth>
-      
       <main className="flex flex-col items-center lg:p-24 md:p-12 sm:p-8 p-2 pt-24">
         <h1 className="font-bold text-5xl">Hi People!</h1>
         <br />

@@ -108,6 +108,7 @@ const SignInPage = () => {
                       />
                     </div>
                   </div>
+                  <br/>
                   <div className="signUpError-Div text-center w-full text-red-600">
                     <p>{bError && bError}</p>
                   </div>
