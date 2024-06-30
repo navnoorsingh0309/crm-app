@@ -21,7 +21,6 @@ const SignInPage = () => {
   const { isLoaded, signIn, setActive } = useSignIn();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [forgetPassword, setForgetPassword] = useState(false);
   const { user } = useUser();
   const router = useRouter();
 
@@ -49,7 +48,6 @@ const SignInPage = () => {
       });
 
       if (result.status === "complete") {
-        console.log(result);
         await setActive({ session: result.createdSessionId });
         router.push("/dashboard");
       } else {

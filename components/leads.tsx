@@ -1,4 +1,4 @@
-import read_leads from "@/appwrite/read_leads";
+import leads_methods from "@/appwrite/leads_methods";
 import {
   Table,
   TableBody,
@@ -40,7 +40,7 @@ const createDynamicComponent = (component: React.ComponentType<any>, props: any)
 };
 
 export async function Leads_Table(id: any) {
-  const jsonLeads = await read_leads.getLeads(id["id"]);
+  const jsonLeads = await leads_methods.getLeads(id["id"]);
   const dynamicTable = createDynamicComponent(dynamicComponent, jsonLeads);
   return (
     <Table>
