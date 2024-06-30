@@ -24,6 +24,9 @@ const config = {
       },
     },
     extend: {
+      screens: {
+        'bento-lg': '1280px'
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
