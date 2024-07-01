@@ -1,6 +1,6 @@
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import AddLeadsDailog from "@/components/add_leads_dailog";
-import Leads_Table from "@/components/leads";
+import Leads_Table from "@/components/leads_table";
 import { currentUser } from "@clerk/nextjs/server";
 
 const Leads = async () => {

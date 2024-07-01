@@ -59,7 +59,7 @@ const NavBar = () => {
                       Dashboard
                     </Link>
                   </Button>
-                <Button
+                {/* <Button
                     variant={"ghost"}
                     asChild
                     className={"border-[color:var(--secondary-500)] border sm:border-0" + (route === "/your-team" ? " bg-slate-200" : "")}
@@ -67,7 +67,7 @@ const NavBar = () => {
                     <Link href="/your-team" className="text-lg font-bold">
                       Your Team
                     </Link>
-                  </Button>
+                  </Button> */}
                   <Button
                     variant={"ghost"}
                     asChild

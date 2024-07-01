@@ -58,10 +58,10 @@ class leads_methods {
         const jsonLeads = leadsToJson(lead_documents.documents);
         return jsonLeads;
       } else {
-        throw new Error("An unexpected error occured");
+        return null;
       }
     } else {
-      throw new Error("An unexpected error occured");
+      return null;
     }
   }
   static async write_lead(
@@ -86,16 +86,16 @@ class leads_methods {
         );
         return "Done";
       } else {
-        return "Not found";
+        return "Error";
       }
     } catch (e) {
-      return e;
+      return "Error";
     }
   }
 
   static async deleteLead(id: string, doc_id: string) {
     if (doc_id === "initial") {
-      return "Ok"
+      return "Error"
     }
     const colId = await this.getLeadsId(id);
     try {
@@ -107,10 +107,10 @@ class leads_methods {
         );
         return "Done"
       } else {
-        return "Not found";
+        return "Error";
       }
     } catch(e) {
-      return e;
+      return "Error";
     }
 
   }
