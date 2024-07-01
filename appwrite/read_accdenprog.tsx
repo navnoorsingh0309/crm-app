@@ -1,6 +1,6 @@
 import { database } from "@/appwrite/config";
 import config_appwrite from "@/config/config";
-import { Query } from "node-appwrite";
+import { ID, Query } from "node-appwrite";
 
 class read_accdenprog {
   static async getAccDenProg(id: string) {
@@ -18,7 +18,20 @@ class read_accdenprog {
           response.documents[0]["details"][2],
         ];
       } else {
-        throw new Error("An unexpected error occured");
+        // Activities Missing
+        // Creating Activities document
+        var writeDoc = await database.createDocument(
+          config_appwrite.appWriteDatabaseId,
+          config_appwrite.appWriteAccDenProgCollectionId,
+          ID.unique(),
+          {
+              user_id: id,
+              details: [0, 0, 0]
+          }
+        );
+        return [
+          0, 0, 0
+        ];
       }
     } catch (e) {
       console.error("Error in getting details: ", e);

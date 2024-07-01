@@ -41,10 +41,14 @@ class leads_methods {
       if (response.total > 0) {
         collectionId = response.collections[0].$id;
         return response.collections[0].$id;
+      } else {
+        // Create collection
+        let col_id = ID.unique();
+        var res = await database.createCollection(config_appwrite.appWriteDatabaseId, ID.unique(), id);
+        return col_id;
       }
     } catch (e) {
-      console.error("Error in getting activities: ", e);
-      throw e;
+      return "Error";
     }
   }
   static async getLeads(id: string) {

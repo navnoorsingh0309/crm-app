@@ -1,9 +1,11 @@
 import { database } from "@/appwrite/config";
 import config_appwrite from "@/config/config";
-import { Query } from "node-appwrite";
+import { ID, Query } from "node-appwrite";
 
 class read_activities {
   static async getActivities(id: string) {
+    // If first Use
+
     try {
       // Reading documents of the current user
       var response = await database.listDocuments(
@@ -18,7 +20,20 @@ class read_activities {
           response.documents[0]["activities"][2],
         ];
       } else {
-        throw new Error("An unexpected error occured");
+        // Activities Missing
+        // Creating Activities document
+        var writeDoc = await database.createDocument(
+          config_appwrite.appWriteDatabaseId,
+          config_appwrite.appWriteActivitiesCollectionId,
+          ID.unique(),
+          {
+              user_id: id,
+              activities: [0, 0, 0]
+          }
+        );
+        return [
+          0, 0, 0
+        ];
       }
     } catch (e) {
       console.error("Error in getting activities: ", e);

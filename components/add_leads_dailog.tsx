@@ -14,7 +14,6 @@ import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { useToast } from "./ui/use-toast";
 import { ToastAction } from "./ui/toast";
-import { useRouter } from "next/navigation";
 
 const AddLeadsDailog = (id: any) => {
   const [name, setName] = useState("name");
