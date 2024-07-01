@@ -21,6 +21,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/api/writeLeadapi.js", "app/api/hello.js", "app/api/writeLead/route.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/api/writeLeadapi.js", "app/api/hello.js", "app/api/writeLead/route.js", "app/api/getLeads/route.js", "app/api/deleteLead/route.js"],
   "exclude": ["node_modules"]
 }

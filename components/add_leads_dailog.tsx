@@ -25,7 +25,6 @@ const AddLeadsDailog = (id: any) => {
   const [address, setAddress] = useState("a");
   const user_id = id["id"];
   const { toast } = useToast();
-  const router  = useRouter();
   const [open, setOpen] = useState(false);
 
   const handleSubmit = async (e: any) => {
@@ -51,7 +50,6 @@ const AddLeadsDailog = (id: any) => {
         action: <ToastAction altText="Ok">Ok</ToastAction>,
       });
       setOpen(false);
-      router.refresh();
     } else {
       toast({
         variant: "destructive",

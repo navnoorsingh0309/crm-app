@@ -1,8 +1,6 @@
 import config_appwrite from "@/config/config";
 import { database } from "./config";
 import { ID, Models, Query } from "node-appwrite";
-import { toast } from "@/components/ui/use-toast";
-import { ToastAction } from "@/components/ui/toast";
 
 interface Json {
   [key: string]: any;
@@ -20,6 +18,7 @@ function leadsToJson(documents: Models.Document[]) {
   var jsonLeads: Json = {};
   documents.forEach((doc) => {
     jsonLeads[doc["Name"]] = {
+      Id: doc.$id,
       Company: doc["Company"],
       Title: doc["Title"],
       Email: doc["Email"],
@@ -91,8 +90,29 @@ class leads_methods {
       }
     } catch (e) {
       return e;
-      throw e;
     }
+  }
+
+  static async deleteLead(id: string, doc_id: string) {
+    if (doc_id === "initial") {
+      return "Ok"
+    }
+    const colId = await this.getLeadsId(id);
+    try {
+      if (colId?.length! > 0) {
+        await database.deleteDocument(
+          config_appwrite.appWriteDatabaseId,
+          colId!,
+          doc_id
+        );
+        return "Done"
+      } else {
+        return "Not found";
+      }
+    } catch(e) {
+      return e;
+    }
+
   }
 }
 
