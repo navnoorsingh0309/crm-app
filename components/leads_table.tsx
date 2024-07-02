@@ -13,6 +13,7 @@ import { Button } from "./ui/button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { ToastAction } from "./ui/toast";
 import { useToast } from "./ui/use-toast";
+import LeadsActionsDialog from "./leads_actions";
 
 interface dynamicRowsProps {
   [Name: string]: {
@@ -27,7 +28,6 @@ interface dynamicRowsProps {
 let user_id: string;
 
 export default function Leads_Table(id: any) {
-
   // Getting user Id
   user_id = id["id"];
   // Leads Data state
@@ -50,10 +50,15 @@ export default function Leads_Table(id: any) {
   const dynamicComponent: React.FC<dynamicRowsProps> = (jsonLeads) => {
     const [docTodel, setDecToDel] = useState("initial");
     const [deleting, setDelete] = useState(false);
+    const [editing, setEditing] = useState(false);
     const { toast } = useToast();
+
+    // For deleting a lead
     useEffect(() => {
+      if (docTodel == "initial")
+        return;
       fetch(`/api/deleteLead?id=${user_id}&doc_id=${docTodel}`, {
-        method: "DELETE"
+        method: "DELETE",
       })
         .then((res) => res.json())
         .then((data) => {
@@ -63,34 +68,45 @@ export default function Leads_Table(id: any) {
               title: "Lead Deleted successfully",
               action: <ToastAction altText="Ok">Ok</ToastAction>,
             });
+          } else {
+            toast({
+              variant: "destructive",
+              title: `${data}`,
+              description: "There was a problem while deleteing the lead",
+            });
           }
-        })
+        });
     }, [deleting]);
+
     return (
       <>
         {jsonLeads ? (
           Object.keys(jsonLeads).map((name) => (
-          <TableRow>
-            <TableCell>{name}</TableCell>
-            <TableCell>{jsonLeads[name].Id}</TableCell>
-            <TableCell>{jsonLeads[name].Company}</TableCell>
-            <TableCell>{jsonLeads[name].Title}</TableCell>
-            <TableCell>{jsonLeads[name].Email}</TableCell>
-            <TableCell>{jsonLeads[name].Phone_Number}</TableCell>
-            <TableCell>{jsonLeads[name].Address}</TableCell>
-            <TableCell>
-              <Button
-                variant="destructive"
-                onClick={() => {
-                  setDecToDel(jsonLeads[name].Id);
-                  setDelete(!deleting);
-                }}
-              >
-                <DeleteIcon />
-              </Button>
-            </TableCell>
-          </TableRow>
-        ))) : (
+            <TableRow>
+              <TableCell>{name}</TableCell>
+              <TableCell>{jsonLeads[name].Id}</TableCell>
+              <TableCell>{jsonLeads[name].Company}</TableCell>
+              <TableCell>{jsonLeads[name].Title}</TableCell>
+              <TableCell>{jsonLeads[name].Email}</TableCell>
+              <TableCell>{jsonLeads[name].Phone_Number}</TableCell>
+              <TableCell>{jsonLeads[name].Address}</TableCell>
+              <TableCell>
+                <div className="flex flex-row gap-1">
+                  <LeadsActionsDialog/>
+                  <Button
+                    variant="destructive"
+                    onClick={() => {
+                      setDecToDel(jsonLeads[name].Id);
+                      setDelete(!deleting);
+                    }}
+                  >
+                    <DeleteIcon />
+                  </Button>
+                </div>
+              </TableCell>
+            </TableRow>
+          ))
+        ) : (
           <> </>
         )}
       </>
