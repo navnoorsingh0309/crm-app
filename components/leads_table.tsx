@@ -83,7 +83,7 @@ export default function Leads_Table(id: any) {
                 variant="destructive"
                 onClick={() => {
                   setDecToDel(jsonLeads[name].Id);
-                  setDelete(true);
+                  setDelete(!deleting);
                 }}
               >
                 <DeleteIcon />

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -16,19 +16,20 @@ import { useToast } from "./ui/use-toast";
 import { ToastAction } from "./ui/toast";
 
 const AddLeadsDailog = (id: any) => {
-  const [name, setName] = useState("name");
-  const [company, setCompany] = useState("c");
-  const [title, setTitle] = useState("t");
-  const [email, setEmail] = useState("e");
-  const [phone, setPhone] = useState("p");
-  const [address, setAddress] = useState("a");
+  const [name, setName] = useState("");
+  const [company, setCompany] = useState("");
+  const [title, setTitle] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
   const user_id = id["id"];
   const { toast } = useToast();
   const [open, setOpen] = useState(false);
-
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
-    const res = await fetch("/api/writeLead", {
+  const [adding, setAdding] = useState(false);
+  useEffect(() => {
+    if (name === "")
+      return;
+    fetch("/api/writeLead", {
       method: "POST",
       body: JSON.stringify({
         id: user_id,
@@ -42,21 +43,29 @@ const AddLeadsDailog = (id: any) => {
       headers: {
         "Content-type": "application/json",
       },
+    }).then((res) => res.json())
+    .then((data) => {
+        if (data === "Done") {
+          toast({
+            title: "Lead has been added successfully!!",
+            action: <ToastAction altText="Ok">Ok</ToastAction>,
+          });
+          setOpen(false);
+        } else {
+          toast({
+            variant: "destructive",
+            title: `${data}`,
+            description: "There was a problem while adding lead",
+          });
+        }
     });
-    if (res.status === 200) {
-      toast({
-        title: "Lead Added successfully",
-        action: <ToastAction altText="Ok">Ok</ToastAction>,
-      });
-      setOpen(false);
-    } else {
-      toast({
-        variant: "destructive",
-        title: "Uh oh! Something went wrong.",
-        description: "There was a problem while added lead",
-      });
-    }
-  };
+  }, [adding]);
+  
+  // Form submit
+  const handleSubmit = (e: any) => {
+    
+    setAdding(!adding);
+  }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

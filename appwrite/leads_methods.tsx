@@ -44,7 +44,15 @@ class leads_methods {
       } else {
         // Create collection
         let col_id = ID.unique();
-        var res = await database.createCollection(config_appwrite.appWriteDatabaseId, ID.unique(), id);
+        database.createCollection(config_appwrite.appWriteDatabaseId, col_id, id). then(async ()=> {
+
+        // Creating attributes
+        database.createStringAttribute(config_appwrite.appWriteDatabaseId, col_id, "Name", 1000, true);
+        database.createStringAttribute(config_appwrite.appWriteDatabaseId, col_id, "Company", 1000, true);
+        database.createStringAttribute(config_appwrite.appWriteDatabaseId, col_id, "Title", 1000, true);
+        database.createEmailAttribute(config_appwrite.appWriteDatabaseId, col_id, "Email", true);
+        database.createStringAttribute(config_appwrite.appWriteDatabaseId, col_id, "Phone_Number", 1000, true);
+        database.createStringAttribute(config_appwrite.appWriteDatabaseId, col_id, "Address", 1000, true); });
         return col_id;
       }
     } catch (e) {

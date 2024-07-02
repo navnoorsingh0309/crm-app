@@ -11,7 +11,7 @@ export async function POST(req) {
     Phone_Number: res["phone"],
     Address: res["address"],
   })
-  return NextResponse.json({
+  return NextResponse.json(
     appwriteResponse
-  })
+  )
   }
