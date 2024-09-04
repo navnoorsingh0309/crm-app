@@ -98,7 +98,7 @@ const NavBar = () => {
             ) : (
               <Button className="hidden sm:flex" asChild>
                 <Link href="/sign-up" className="text-lg font-bold">
-                  Let's get started
+                  Let&apos;s get started
                 </Link>
               </Button>
             )}

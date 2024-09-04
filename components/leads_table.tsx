@@ -81,9 +81,9 @@ export default function Leads_Table(id: any) {
     return (
       <>
         {jsonLeads ? (
-          Object.keys(jsonLeads).map((name) => (
+          Object.keys(jsonLeads).map((name, idx) => (
             <TableRow>
-              <TableCell>{name}</TableCell>
+              <TableCell key={idx}>{name}</TableCell>
               <TableCell>{jsonLeads[name].Company}</TableCell>
               <TableCell  className="hidden lg:table-cell">{jsonLeads[name].Title}</TableCell>
               <TableCell  className="hidden lg:table-cell">{jsonLeads[name].Email}</TableCell>

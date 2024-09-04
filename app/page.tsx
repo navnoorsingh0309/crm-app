@@ -21,7 +21,7 @@ export default async function Home() {
         {user ? null : (
         <Button asChild>
           <Link href="/sign-up" className="text-lg font-bold">
-            Let's start <ArrowRight className="ml-2 h-5 w-5"/>
+            Let&apos;s start <ArrowRight className="ml-2 h-5 w-5"/>
           </Link>
         </Button> )}
         <br/>
