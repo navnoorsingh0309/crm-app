@@ -70,7 +70,7 @@ const AddLeadsDailog = (id: any) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="text-[10px] md:text-[16px]">Add Lead</Button>
+        <Button className="text-[8px] md:text-[16px]">Add Lead</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>

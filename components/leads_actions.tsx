@@ -17,7 +17,7 @@ const LeadsActionsDialog = (id: any) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="default"><InfoIcon /></Button>
+        <Button className="h-[24px] md:h-8 px-1 md:px-2 py-2" variant="default"><InfoIcon /></Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>

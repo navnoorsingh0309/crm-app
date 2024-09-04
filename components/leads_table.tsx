@@ -47,7 +47,7 @@ export default function Leads_Table(id: any) {
   }, []);
 
   // Dynamic Table component
-  const dynamicComponent: React.FC<dynamicRowsProps> = (jsonLeads) => {
+  const DynamicComponent: React.FC<dynamicRowsProps> = (jsonLeads) => {
     const [docTodel, setDecToDel] = useState("initial");
     const [deleting, setDelete] = useState(false);
     const [editing, setEditing] = useState(false);
@@ -84,23 +84,23 @@ export default function Leads_Table(id: any) {
           Object.keys(jsonLeads).map((name) => (
             <TableRow>
               <TableCell>{name}</TableCell>
-              <TableCell>{jsonLeads[name].Id}</TableCell>
               <TableCell>{jsonLeads[name].Company}</TableCell>
-              <TableCell>{jsonLeads[name].Title}</TableCell>
-              <TableCell>{jsonLeads[name].Email}</TableCell>
-              <TableCell>{jsonLeads[name].Phone_Number}</TableCell>
-              <TableCell>{jsonLeads[name].Address}</TableCell>
+              <TableCell  className="hidden lg:table-cell">{jsonLeads[name].Title}</TableCell>
+              <TableCell  className="hidden lg:table-cell">{jsonLeads[name].Email}</TableCell>
+              <TableCell  className="hidden lg:table-cell">{jsonLeads[name].Phone_Number}</TableCell>
+              <TableCell  className="hidden lg:table-cell">{jsonLeads[name].Address}</TableCell>
               <TableCell>
                 <div className="flex flex-row gap-1">
                   <LeadsActionsDialog/>
                   <Button
+                  className="h-[24px] md:h-8 px-0 md:px-2 py-2"
                     variant="destructive"
                     onClick={() => {
                       setDecToDel(jsonLeads[name].Id);
                       setDelete(!deleting);
                     }}
                   >
-                    <DeleteIcon />
+                    <DeleteIcon/>
                   </Button>
                 </div>
               </TableCell>
@@ -122,7 +122,7 @@ export default function Leads_Table(id: any) {
 
   if (isLoading) return <p>Loading...</p>;
   if (jsonLeads === null) return <p>No Leads</p>;
-  const dynamicTable = createDynamicComponent(dynamicComponent, jsonLeads);
+  const dynamicTable = createDynamicComponent(DynamicComponent, jsonLeads);
 
   return (
     <Table>
@@ -130,12 +130,11 @@ export default function Leads_Table(id: any) {
       <TableHeader>
         <TableRow>
           <TableHead>Name</TableHead>
-          <TableHead>Lead Id</TableHead>
           <TableHead>Company</TableHead>
-          <TableHead>Title</TableHead>
-          <TableHead>Email</TableHead>
-          <TableHead>Phone Number</TableHead>
-          <TableHead>Address</TableHead>
+          <TableHead className="hidden lg:table-cell">Title</TableHead>
+          <TableHead className="hidden lg:table-cell">Email</TableHead>
+          <TableHead className="hidden lg:table-cell">Phone Number</TableHead>
+          <TableHead className="hidden lg:table-cell">Address</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>{dynamicTable}</TableBody>
