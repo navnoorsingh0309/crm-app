@@ -120,8 +120,8 @@ const SignUpPage = () => {
             src="/logo.jpg"
             className="md:h-20 md:w-20 h-14 w-14 rounded-full"
           />
-          <div className="w-full mx-auto rounded-none md:rounded-2xl md:p-4 shadow-input bg-white dark:bg-black">
-            <Card className="mx-auto sm:w-[400px] w-10/12 min-w-96 h-fit">
+          <div className="mx-auto rounded-none md:rounded-2xl md:p-4 shadow-input bg-white dark:bg-black sm:w-auto w-full flex justify-center">
+            <Card className="sm:w-[400px] w-10/12 min-w-80 h-fit">
               <CardHeader>
                 <CardTitle>Sign Up</CardTitle>
                 <CardDescription>
