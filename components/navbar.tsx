@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Button } from "./ui/button";
 import { SignOutButton, useUser } from "@clerk/nextjs";
 import { usePathname } from "next/navigation";
+import Hamburger_Menu from "./ui/hamburger-menu";
 
 const NavBar = () => {
   const { user } = useUser();
@@ -86,14 +87,15 @@ const NavBar = () => {
                       Deals
                     </Link>
                   </Button>
+                  <span
+                    className="h-6 w-px bg-gray-200 hidden md:flex"
+                    aria-hidden="true"
+                  />
+                  <SignOutButton>
+                    <Button>Signout</Button>
+                  </SignOutButton>
                 </div>
-                <span
-                  className="h-6 w-px bg-gray-200 hidden md:flex"
-                  aria-hidden="true"
-                />
-                <SignOutButton>
-                  <Button>Signout</Button>
-                </SignOutButton>
+                <Hamburger_Menu/>
               </div>
             ) : (
               <Button className="hidden sm:flex" asChild>

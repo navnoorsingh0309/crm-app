@@ -11,7 +11,7 @@ export async function Activities(id:any) {
     }
   ]
   return (
-    <div className="border border-black rounded-xl w-11/12 sm:w-[500px] min-w-[400px] h-[400px] p-4">
+    <div className="border border-black rounded-xl w-full sm:w-[500px] h-[400px] p-4">
       <h3 className="text-lg font-medium text-tremor-content-strong dark:text-dark-tremor-content-strong">
         Activities
       </h3>
