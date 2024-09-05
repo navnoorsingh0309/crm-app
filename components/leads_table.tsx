@@ -17,6 +17,7 @@ import LeadsActionsDialog from "./leads_actions";
 
 interface dynamicRowsProps {
   [Name: string]: {
+    Id: string;
     Company: string;
     Title: string;
     Email: string;
