@@ -2,9 +2,13 @@ import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import { AccDenProg } from "@/components/dashboard_charts/accdenprog";
 import { Activities } from "@/components/dashboard_charts/activities";
 import { currentUser } from "@clerk/nextjs/server";
+import { setUserIdInStore } from "@/lib/features/idSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const Dashboard = async () => {
   const user = await currentUser();
+  const dispatch = useDispatch();
+  dispatch(setUserIdInStore(user?.id));
   return (
     <MaxWidthWrapper>
       <div className="flex flex-col items-center lg:p-12">

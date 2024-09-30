@@ -25,6 +25,7 @@ const LeadsActionsDialog = (id: any) => {
           <DialogDescription>
             Contact with your lead to dicuss over your business :)
           </DialogDescription>
+          
         </DialogHeader>
       </DialogContent>
     </Dialog>
